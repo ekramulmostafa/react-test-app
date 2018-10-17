@@ -20,23 +20,27 @@ const API_KEY = 'ec1e44e38f204bf4868bfb2cac133631';
 
 
 const Home = async () => {
-    await starter()
-    const contentListDivs = [];
+    // await starter()
+    console.log('asi');
+    /*const contentListDivs = [];
+    console.log(contentLists);return;
     for(let i = 0; i < contentLists.length; i++){
-        contentListDivs.push( <ContentListBlock bongoId={contentList.bongoId} contentName={contentList.title} /> )
-    }
-    return (
+        contentListDivs.push( <ContentListBlock bongoId={contentLists[i].bongoId} contentName={contentLists[i].title} /> )
+    }*/
+
+    /*return (
         <div>
             HOME PAGE
             {contentListDivs}
         </div>
-    );
+    );*/
 }
 
 var token = '';
 var baseURL = 'https://api.bioscopelive.com';
 var contentLists = [];
 
+/*
 async function getWeather (e){
     e.preventDefault();
     const api_call =  await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=${API_KEY}`);
@@ -44,8 +48,9 @@ async function getWeather (e){
 
     console.log(data);
 }
+*/
 
-
+/*
 async function starter(){
 
     token = localStorage.getItem("tokenSaved");
@@ -55,7 +60,7 @@ async function starter(){
         await tokenGennerate();
     }
 
-    console.log('token = '+token+" "+localStorage.getItem('tokenSaved'));
+    // console.log('token = '+token+" "+localStorage.getItem('tokenSaved'));
 
     await getContentList();
 }
@@ -76,7 +81,7 @@ async function getContentList(){
     await axios(objectInstance).then((res) => {
 
         console.log(res.data._embedded.contents);
-        contentLists = res.data._embedded.contents;
+        // contentLists = res.data._embedded.contents;
     }).catch((error) => {
         console.log('error'+error);
         localStorage.setItem('tokenSaved', '');
@@ -109,6 +114,6 @@ async function tokenGennerate(){
         console.log('token error = '+error);
     });
 
-}
+}*/
 
 export default Home;
