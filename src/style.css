@@ -1,0 +1,25 @@
+.total-content-list{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+}
+.content-list-item{
+
+    margin: 10px;
+}
+
+.content-list-item a{
+    text-decoration: none;
+}
+
+.content-list-item .content-image img{
+    width: 350px;
+}
+.content-list-item .content-image{
+
+}
+
+.content-list-item .content-detail{
+
+}

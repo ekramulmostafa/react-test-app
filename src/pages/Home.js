@@ -1,119 +1,87 @@
-import React from 'react'
-import Title from '../components/Title'
-import Form from '../components/Form'
-import Weather from '../components/Weather'
-import ContentListBlock from '../components/ContentListBlock'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
+import ComponentListBlock from '../components/ContentListBlock'
 
-const API_KEY = 'ec1e44e38f204bf4868bfb2cac133631';
-/*const Home = () => {
-
-    return(
-        <div>
-            <Title />
-            <Form getWeather={getWeather} />
-            <Weather/>
-        </div>
-    );
-}*/
-
-
-
-const Home = async () => {
-    // await starter()
-    console.log('asi');
-    /*const contentListDivs = [];
-    console.log(contentLists);return;
-    for(let i = 0; i < contentLists.length; i++){
-        contentListDivs.push( <ContentListBlock bongoId={contentLists[i].bongoId} contentName={contentLists[i].title} /> )
-    }*/
-
-    /*return (
-        <div>
-            HOME PAGE
-            {contentListDivs}
-        </div>
-    );*/
-}
-
-var token = '';
-var baseURL = 'https://api.bioscopelive.com';
-var contentLists = [];
-
-/*
-async function getWeather (e){
-    e.preventDefault();
-    const api_call =  await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=${API_KEY}`);
-    const data = await api_call.json();
-
-    console.log(data);
-}
-*/
-
-/*
-async function starter(){
-
-    token = localStorage.getItem("tokenSaved");
-
-    // this.tokenGennerate();
-    if(token == null || token == ''){
-        await tokenGennerate();
+class Home extends React.Component{
+    state = {
+        ContentList: '',
+        baseUrl: 'https://api.bioscopelive.com',
+        token: '',
+        contentList: [],
+        divs: ''
     }
 
-    // console.log('token = '+token+" "+localStorage.getItem('tokenSaved'));
+    async getToken(){
+        let objectInstance = {
+            url: this.state.baseUrl + '/api/login_check',
+            method: 'post',
+            // headers: {'X-Custom-Header': 'foobar'},
+            data: {
+                "authentication_type" 	: "anonymous",
+                "anonymous_id"			: "bioscope_anonymous",
+                "client_type"     		: "web",
+                "client_id"       		: "web_"+Math.random(),
+                "channel"  				: "bioscope_web_anonymous"
+            }
+        };
 
-    await getContentList();
+        await axios(objectInstance).then((res) => {
+
+            this.setState({token: res.data.token}) ;
+            localStorage.setItem('tokenSaved', this.state.token);
+            // localStorage.setItem('tokenSaved',)
+        }).catch(function (error) {
+            console.log(error)
+        });
+    }
+
+    async getContntList(){
+        let objectInstance = {
+            // url: this.baseURL + '/api/en/content-selector/feluda-full-series',
+            url: this.state.baseUrl + '/api/en/content-selector/drama-dhamaka',
+            method: 'get',
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : "Bearer " + this.state.token,
+                "Access-Code" : "QkQ%3D"
+            },
+        };
+
+        await axios(objectInstance).then((res) => {
+
+            // console.log(res.data._embedded.contents);
+            this.setState({contentLists : res.data._embedded.contents});
+            this.getData();
+
+
+        }).catch((error) => {
+            console.log('error'+error);
+            localStorage.setItem('tokenSaved', '');
+            this.getToken();
+        });
+    }
+
+    getData(){
+
+        var data = this.state.contentLists.map((item, key) => {
+            // return <div>{item.title}</div>
+            return <ComponentListBlock bongoId={item.bongoId} contentName={item.title} key={key}></ComponentListBlock>
+        })
+
+        this.setState({divs: data});
+        // console.log(divs);
+    }
+
+    async componentDidMount(){
+        await this.getToken();
+        await this.getContntList();
+    }
+
+    render(){
+        return(
+            <div className="total-content-list">{this.state.divs}</div>
+        );
+    }
 }
-
-async function getContentList(){
-
-    let objectInstance = {
-        // url: this.baseURL + '/api/en/content-selector/feluda-full-series',
-        url: baseURL + '/api/en/content-selector/drama-dhamaka',
-        method: 'get',
-        headers: {
-            "Content-Type" : "application/json",
-            "Authorization" : "Bearer " + token,
-            "Access-Code" : "QkQ%3D"
-        },
-    };
-
-    await axios(objectInstance).then((res) => {
-
-        console.log(res.data._embedded.contents);
-        // contentLists = res.data._embedded.contents;
-    }).catch((error) => {
-        console.log('error'+error);
-        localStorage.setItem('tokenSaved', '');
-        starter();
-    });
-}
-
-async function tokenGennerate(){
-
-    let objectInstance = {
-        url: baseURL + '/api/login_check',
-        method: 'post',
-        // headers: {'X-Custom-Header': 'foobar'},
-        data: {
-            "authentication_type" 	: "anonymous",
-            "anonymous_id"			: "bioscope_anonymous",
-            "client_type"     		: "web",
-            "client_id"       		: "web_"+Math.random(),
-            "channel"  				: "bioscope_web_anonymous"
-        }
-    };
-
-    // console.log(objectInstance);return;
-    await axios(objectInstance).then((res) => {
-
-        token = res.data.token;
-        localStorage.setItem('tokenSaved', token);
-        // localStorage.setItem('tokenSaved',)
-    }).catch(function (error) {
-        console.log('token error = '+error);
-    });
-
-}*/
 
 export default Home;
