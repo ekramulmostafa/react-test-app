@@ -74,12 +74,12 @@ export default class ContentDetails extends React.Component{
         return(
             <div className="total-content-list">
                 <div>
-                <div className=""><h2>{this.state.contentTitle}</h2></div>
+                <div className=""><h1>{this.state.contentTitle}</h1></div>
                 <div className="total-content-list">
                     <video id="my-player" className="video-js" controls preload="auto" width="640" height="264">
                     </video>
                 </div>
-                <div className="">{this.state.contentDetails}</div>
+                    <div className="description"><b>Description: </b>{this.state.contentDetails}</div>
                 </div>
             </div>
         );

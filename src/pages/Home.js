@@ -79,7 +79,10 @@ class Home extends React.Component{
 
     render(){
         return(
-            <div className="total-content-list">{this.state.divs}</div>
+            <div className="total-content-list">
+                <h1>These are the content list</h1>
+                {this.state.divs}
+            </div>
         );
     }
 }
