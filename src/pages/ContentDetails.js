@@ -76,7 +76,7 @@ export default class ContentDetails extends React.Component{
                 <div>
                 <div className=""><h1>{this.state.contentTitle}</h1></div>
                 <div className="total-content-list">
-                    <video id="my-player" className="video-js" controls preload="auto" width="640" height="264">
+                    <video id="my-player" className="video-js vjs-default-skin" controls preload="auto" width="640" height="264" data-setup='{"fluid": true}'>
                     </video>
                 </div>
                     <div className="description"><b>Description: </b>{this.state.contentDetails}</div>
