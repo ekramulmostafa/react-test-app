@@ -49,7 +49,7 @@ class Home extends React.Component{
 
         await axios(objectInstance).then((res) => {
 
-            // console.log(res.data._embedded.contents);
+            console.log(res.data._embedded.contents);
             this.setState({contentLists : res.data._embedded.contents});
             this.getData();
 
@@ -78,6 +78,7 @@ class Home extends React.Component{
     }
 
     render(){
+        const {token, contentList} = this.state
         return(
             <div className="total-content-list">
                 <h1>Content list(React JS)</h1>

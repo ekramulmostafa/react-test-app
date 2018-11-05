@@ -27,7 +27,7 @@ export default class ContentDetails extends React.Component{
             },
         };
 
-        console.log(objectInstance);
+        // console.log(objectInstance);
 
         await axios(objectInstance).then((res) => {
             this.setState({contentUrl : res.data._embedded.content.videoUrl});

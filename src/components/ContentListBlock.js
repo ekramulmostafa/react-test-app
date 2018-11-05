@@ -5,12 +5,14 @@ class ContentListBlock extends React.Component{
     render(){
         return(
             <div className="content-list-item">
-                <Link to={{
+                {/*<Link to={{
                     pathname: '/contentDetails/'+this.props.bongoId
-                }}>
+                }}>*/}
+                <a href={'/contentDetails/'+this.props.bongoId}>
                     <div className="content-image"><img alt="picture" src={'https://cdn.bioscopelive.com/upload/content/landscape/sd/'+this.props.bongoId+'.jpg'} /></div>
                     <div className="content-detail">{this.props.contentName}</div>
-                </Link>
+                </a>
+                {/*</Link>*/}
 
             </div>
 
