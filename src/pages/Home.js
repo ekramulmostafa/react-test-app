@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {tokenGenerate, contentList} from '../api/api';
 import ComponentListBlock from '../components/ContentListBlock'
 
 class Home extends React.Component{
@@ -12,7 +13,7 @@ class Home extends React.Component{
     }
 
     async getToken(){
-        let objectInstance = {
+        /*let objectInstance = {
             url: this.state.baseUrl + '/api/login_check',
             method: 'post',
             // headers: {'X-Custom-Header': 'foobar'},
@@ -32,11 +33,20 @@ class Home extends React.Component{
             // localStorage.setItem('tokenSaved',)
         }).catch(function (error) {
             console.log(error)
-        });
+        });*/
+
+        const data = await tokenGenerate(this.state.baseUrl);
+        // console.log(data);
+        if(typeof data.token !== 'undefined'){
+            this.setState({token: data.token}) ;
+            localStorage.setItem('tokenSaved', this.state.token);
+        }
+
+        // console.log(this.state.token);
     }
 
     async getContntList(){
-        let objectInstance = {
+        /*let objectInstance = {
             // url: this.baseURL + '/api/en/content-selector/feluda-full-series',
             url: this.state.baseUrl + '/api/en/content-selector/drama-dhamaka',
             method: 'get',
@@ -58,7 +68,19 @@ class Home extends React.Component{
             console.log('error'+error);
             localStorage.setItem('tokenSaved', '');
             this.getToken();
-        });
+        });*/
+
+
+        const data = await contentList(this.state.baseUrl, this.state.token)
+
+        // console.log(JSON.stringify(data, null, 2));
+        if(typeof data.contentLists !== 'undefined'){
+            this.setState({contentLists : data.contentLists});
+            this.getData();
+        }else{
+            localStorage.setItem('tokenSaved', '');
+            this.getToken();
+        }
     }
 
     getData(){
